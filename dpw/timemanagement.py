@@ -66,9 +66,15 @@ class TimeManagement(Scraper):
 
     # get working time balance when in calendar view
     def time_balance(self):
-        time_balance = self.dpw_div.find_element(By.XPATH, "//div[@id='divsaldo1']/div[2]").text
-        return float(time_balance.replace(',', '.'))
-
+        time_balance_str = self.dpw_div.find_element(By.XPATH, "//div[@id='divsaldo1']/div[2]").text
+        time_balance = None
+        try:
+            time_balance = float(time_balance_str.replace(',', '.'))
+        except ValueError:
+           # when we are unable to parse the value
+           time_balance = None
+           pass
+        return time_balance
 
     # at this point we assume that the correct month/year is already loaded, we just search for the day
     def _find_current_day_element(self, check_date):
@@ -125,6 +131,26 @@ class TimeManagement(Scraper):
             to_input.submit()
 
         pass
+	
+    def get_times(self, the_date):
+        day_element = self._find_current_day_element(the_date)
+        from_str = day_element.find_element_by_id("pzbuchzvon").get_attribute('value')
+        to_str = day_element.find_element_by_id("pzbuchzbis").get_attribute('value')
+        from_time = None
+        to_time = None
+ 
+        try:
+            from_time = datetime.strptime(from_str, '%H:%M')
+        except ValueError:
+            pass
+ 
+        try:
+            to_time = datetime.strptime(to_str, '%H:%M')
+        except ValueError:
+            pass
+ 
+        return (from_time.time(), to_time.time())
+ 
 
 
 if __name__ == "main":
