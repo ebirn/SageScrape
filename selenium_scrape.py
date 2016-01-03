@@ -13,7 +13,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
 check_date = date.today()
-#check_date = date(2015, 9, 06)
+#check_date = date(2015, 9, 7) # this is known to be a monday
 
 
 config = ConfigParser.ConfigParser()
