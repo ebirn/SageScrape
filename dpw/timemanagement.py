@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
-from common.base import Scraper
+from sagescrape.common.base import Scraper
 
 
 class TimeManagement(Scraper):
@@ -18,16 +18,15 @@ class TimeManagement(Scraper):
 
     def launch(self):
         super(TimeManagement, self).launch()
-        systime.sleep(3)
+        print("timemanagement::launch: switch_to.frame()")
         self.driver.switch_to.frame("main")
-        self.dpw_div = self.driver.find_element(By.ID, "dpwdiv")
+        self.dpw_div = self.find((By.ID, "dpwdiv"))
         self.elem_info(self.dpw_div)
 
         # find link to timesheet data
-        timesheet_link = self.driver.find_element_by_link_text("Time sheet")
+        timesheet_link = self.find((By.LINK_TEXT, "Time sheet"))
         self.elem_info(timesheet_link)
         timesheet_link.click()
-        self.driver.switch_to.frame("main")
         #
         print("ENTERING TIMESHEET")
 
@@ -42,10 +41,10 @@ class TimeManagement(Scraper):
     # load page that displays calendar for the given date
     def _switch_times_calendar(self, select_date):
         # look at the set month / year
-        date_selector = self.dpw_div.find_element(By.ID, "reg1monat")
+        date_selector = self.find((By.ID, "reg1monat"), root=self.dpw_div)
 
         # show weekend days: saturday / sunday
-        date_selector.find_element(By.ID, "saso").click()
+        date_selector.find((By.ID, "saso")).click()
 
         year_select = Select(date_selector.find_element(By.ID, "jahr"))
         month_select = Select(date_selector.find_element(By.ID, "monat"))
@@ -78,7 +77,7 @@ class TimeManagement(Scraper):
 
     # at this point we assume that the correct month/year is already loaded, we just search for the day
     def _find_current_day_element(self, check_date):
-        calendar_table = self.dpw_div.find_element(By.XPATH, "//div[@id='reg1kalender']")
+        calendar_table = self.find((By.XPATH, "//div[@id='reg1kalender']"))
         self.elem_info(calendar_table)
 
         # Table cells, that represent days, each again containing tables
@@ -118,11 +117,11 @@ class TimeManagement(Scraper):
         day_element.click()
 
         if from_time:
-            from_input = self.driver.find_element(By.ID, "pzbuchzvon")
+            from_input = self.find((By.ID, "pzbuchzvon"))
             self._fill_time_field(from_input, from_time)
 
         if to_time:
-            to_input = self.driver.find_element(By.ID, "pzbuchzbis")
+            to_input = self.find((By.ID, "pzbuchzbis"))
             self._fill_time_field(to_input, to_time)
 
 
