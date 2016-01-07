@@ -29,9 +29,7 @@ class Scraper(object):
         self.driver.get(self.url)
 
 
-    def find(self, locator, root=None, timeout=10):
-
-
+    def find(self, locator, root=None, timeout=30):
         root_element = root if root else self.driver
 
         # wait for up to timeout seconds for DOM element to appear and return it when found
@@ -42,3 +40,6 @@ class Scraper(object):
 
 
 
+    def shutdown(self):
+        if self.driver is not None:
+            self.driver.quit()
