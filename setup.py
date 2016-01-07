@@ -11,10 +11,12 @@ setup(name='sagescrape',
       license='MIT',
       packages=['sagescrape'],
       install_requires=[
-          'ConfigParser',
           'datetime',
+          'ConfigParser',
           'selenium',
       ],
-      zip_safe=False)
+      zip_safe=False,
+      scripts=['scripts/dpw_enter_now', 'scripts/dpw_exit_now'],
+      )
 
 

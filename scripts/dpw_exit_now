@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import datetime
+from datetime import date
+from sagescrape.dpw.timemanagement import TimeManagement
+
+if __name__ == "__main__":
+    # datetimel.time() gives the current time
+    #
+    tm = TimeManagement()
+    tm.launch()
+    tm.fill_times(date.today(), to_time=datetime.datetime.now().time())
+
+    tm.shutdown()
+
