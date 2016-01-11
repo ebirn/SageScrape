@@ -4,7 +4,7 @@ from datetime import date, time
 from sagescrape.dpw.timemanagement import TimeManagement
 
 if __name__ == "__main__":
-    # datetimel.time() gives the current time
+    # datetime.time() gives the current time
     my_enter = time(9,23)
     my_exit = time(17,42)
 

@@ -5,7 +5,8 @@ import time as systime
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from sagescrape.common.base import Scraper
 
@@ -19,7 +20,10 @@ class TimeManagement(Scraper):
     def launch(self):
         super(TimeManagement, self).launch()
         print("timemanagement::launch: switch_to.frame()")
-        self.driver.switch_to.frame("main")
+
+        main_frame = WebDriverWait(self.driver, 30).until(EC.frame_to_be_available_and_switch_to_it((By.ID, 'main')))
+        #self.driver.switch_to.frame("main")
+
         self.dpw_div = self.find((By.ID, "dpwdiv"))
         self.elem_info(self.dpw_div)
 
