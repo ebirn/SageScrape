@@ -130,7 +130,7 @@ class TimeManagement(Scraper):
 
 
         # submits the whole form, doesn't matter on which element of the form
-        if not self.demo_mode:
+        if not self.debug_mode:
             to_input.submit()
 
         pass

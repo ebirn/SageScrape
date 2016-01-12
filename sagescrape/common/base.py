@@ -16,7 +16,7 @@ class Scraper(object):
 
         self.url = "https://" + self.auth +  "@" + self.config.get('global', 'host') + self.config.get(sage_module, 'root_uri')
         self.driver = getattr(webdriver, self.config.get('global', 'driver'))()
-        self.demo_mode = self.config.get('global', 'demo_mode')
+        self.debug_mode = self.config.get('global', 'debug_mode')
         pass
 
     def elem_info(self, elem):
